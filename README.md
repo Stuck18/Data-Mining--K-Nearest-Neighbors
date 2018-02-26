@@ -10,7 +10,7 @@ There are 10 classes, labeled 0, 1, 2, ..., 9 for this data set. The first attri
 
 The program output will display the following
 * The value of K
-* For each test sample, print both the desired class and the computed class, where desired class, is the class label as given in teh data set, and computed class, is what the code produces as the output for the sample.
+* For each test sample, print both the desired class and the computed class, where desired class, is the class label as given in the data set, and computed class, is what the code produces as the output for the sample.
 * The accuracy rate
 * The number of misclassified test samples
 * The total number of test samples
