@@ -36,7 +36,7 @@ def getData(inputFile):
 		lines = csv.reader(csvInput)
 		next(lines) # Skip over header line
 		for row in lines:
-			data.append(row[1:])
+			data.append(row)
 	return data
 	
 # Compute the euclidean distance between 2 tuples
@@ -44,7 +44,7 @@ def euclideanDist(tuple1, tuple2):
 	sum = 0
 	distance = 0 
 	for i in range(0, len(tuple1)):
-		sum += ((int(tuple1[i]) - int(tuple2[i])) * (int(tuple1[i]) - int(tuple2[i])))
+		sum += math.pow((int(tuple1[i]) - int(tuple2[i])), 2)
 	distance = math.sqrt(sum)
 	return distance
 	
@@ -52,29 +52,26 @@ def euclideanDist(tuple1, tuple2):
 # T = Training Data, K = number of neighbors, t = input tuple to classify
 def KNN(T, K, t):
 	N = []
-	NDistances = []
-	for d in T:
+	for d in range(0, len(T)):
+		TUDist = euclideanDist(t[1:], T[d][1:])
 		if (len(N) <= K):
-			N.append(d)
+			N.append((T[d][0], TUDist))
 		else:
-			# Find euclidean distance from input tuple to tuple d from training data
-			TDDist = euclideanDist(t, d)
-			
-			#for i in range(0, len(NDistances)):
 			for i in range(0, len(N)):
-				#if (NDistances[i] <= TDDist):
-				if (euclideanDist(t, N[i]) <= TDDist):
+				if (TUDist <= N[i][1]):
 					N.remove(N[i])
-					#NDistances.remove(NDistances[i])
-					N.append(d)
+					N.append((T[d][0], TUDist))
 					break
 	
-	for i in range(0, len(N)):
-		NDistances.append(euclideanDist(t, N[i]))
-	
-	index = max(enumerate(NDistances))
-	c = index[0]
-	#c = #class to which the most u in N are classified
+	votes = {}
+	for i in range(len(N)):
+		vote = N[i][0]
+		if vote in votes:
+			votes[vote] += 1
+		else:
+			votes[vote] = 1
+	votes = sorted(votes.items(), key=operator.itemgetter(1), reverse=True)
+	c = votes[0][0]
 	return c
 	
 # Determine the accuracy of the algorithm
@@ -98,26 +95,25 @@ def main():
 	trainingData = getData(trainCSVFile)
 	testingData = getData(testCSVFile)
 	
-	neighbors = 4 # Hardcoded value for testing, remove later
+	K = 4 # Hardcoded value for testing, remove later
 	
 	# These will be used to determine accuracy
 	computedClassList = []
 	desiredClassList = []
 	
-	print("K = ", neighbors)
+	print("K = " + str(K))
 	
 	for i in range(0, len(testingData)):
-		print("Run", i)
-		computedClass = KNN(trainingData, neighbors, testingData[i])
+		computedClass = KNN(trainingData, K, testingData[i])
 		desiredClass = testingData[i][0]
 		computedClassList.append(computedClass)
 		desiredClassList.append(desiredClass)
-		print("Desired class: ", testingData[i][0], ", Computed class: ", computedClass)
+		print("Desired class: " + str(testingData[i][0]) + ", Computed class: " + str(computedClass))
 	
 	accuracy, misClassified = calcAccuracy(computedClassList, desiredClassList)
 	
-	print("Accuracy rate: ", accuracy, "%")
-	print("Number of misclassified test samples: ", misClassified)
-	print("Total number of test samples: ", len(testingData))
+	print("Accuracy rate: " + str(accuracy) + "%")
+	print("Number of misclassified test samples: " + str(misClassified))
+	print("Total number of test samples: " + str(len(testingData)))
 	
 main()
