@@ -6,11 +6,11 @@ This KNN implementation will use weighted voting. In weighted voting, the vote o
 
 The provided MNIST_train.cvs will be used as the training data and the MNIST_test.csv will be used as the test data set.
 
-There are 10 classes, labeled 0, 1, 2, ..., 9 for this data set. The first attribute/column is the class label. Also note taht the first line/row in both data sets is the headers line. A description of teh MNIST data is available at [](https://www.kaggle.com/c/digit-recognizer/data)
+There are 10 classes, labeled 0, 1, 2, ..., 9 for this data set. The first attribute/column is the class label. Also note that the first line/row in both data sets is the headers line. A description of the MNIST data is available at [](https://www.kaggle.com/c/digit-recognizer/data)
 
 The program output will display the following
 * The value of K
-* For each test sample, print both the desired class and the computed class, where desired class, is the class label as given in the data set, and computed class, is what the code produces as the output for the sample.
+* For each test sample, print both the desired class and the computed class, where desired class is the class label as given in the data set, and computed class is what the code produces as the output for the sample.
 * The accuracy rate
 * The number of misclassified test samples
 * The total number of test samples
