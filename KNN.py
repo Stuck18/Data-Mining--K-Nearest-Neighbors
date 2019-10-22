@@ -48,7 +48,6 @@ def euclideanDist(tuple1, tuple2):
 	distance = math.sqrt(sum)
 	return distance
 	
-	
 # T = Training Data, K = number of neighbors, t = input tuple to classify
 def KNN(T, K, t):
 	N = []
